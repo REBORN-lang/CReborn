@@ -10,4 +10,6 @@ It is based on the **REBORN Design** document available at [_link_](https://rebo
 # API
 . . .
 
-###### Development lead by: [jstmax](https://github.com/jstmaxlol)@[62-69-74-2E-6C-79-2F-6D-78-5F-69-6E-66-6F](https://bit.ly/mx_info)
+&nbsp;
+### Maintainers
+- jstmax! : <jstmaxlol@disroot.org> & <maxwasmailed@proton.me>
