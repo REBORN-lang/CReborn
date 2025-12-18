@@ -32,6 +32,8 @@ function! s:Compile(debug)
     echo ">>> compiling release build .."
   endif
 
+  " write changes before compiling - for good luck
+  silent write
   execute '!' . l:cmd
 endfunction
 
