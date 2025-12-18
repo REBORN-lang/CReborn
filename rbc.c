@@ -1,14 +1,16 @@
 #ifndef CRBC
 #define CRBC
-/* CReborn - The first "official" C implementation of the Reborn programming language
+/*================================================================================================*
+ * CReborn - The first "official" C implementation of the Reborn programming language
  *           based on the Reborn Standard (reborn-lang.github.io/documents/standard)
- *           The name CReborn (C/Reborn, CREBORN or whatever) has been chosen because
- *           this implementation works by using C as its IR, or in much simpler terms,
- *           this compiler works by compiling Reborn code to C, and then using the
- *           GNU C Compiler (GNU Compiler Collection, gcc) to compile the output C program
- *           to an executable. This decision was made to simplify
- *================================================================================================*
- *#* Development currently lead by: [check README.md]
+ *
+ * The name CReborn (C/Reborn, CREBORN or whatever) has been chosen because
+ * this implementation works by using C as its IR, or in much simpler terms,
+ * this compiler works by compiling Reborn code to C, and then using the GNU C
+ * Compiler (GNU Compiler Collection, gcc) to compile the output C program to
+ * an executable. This decision was made to both simplify the development and also
+ * to be able to focus more on the frontend of the compiler instead of focusing on
+ * optimization and platform-specific instructions.
  *================================================================================================*
  *#* STYLE GUIDELINES FOR CODE CONTRIBUTORS (AND MAINTAINERS):
  *    - Use camelCase for variables.
