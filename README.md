@@ -5,11 +5,11 @@
 It is based on the **Reborn Standard** spec available at [_link_](https://reborn-lang.github.io/documents/standard)
 
 # Contributions
-. . .
+* Lead developer -> czjstmax : <jstmaxlol@disroot.org>
 
 # API
 . . .
 
 &nbsp;
 ### Maintainers
-- czjstmax : <jstmaxlol@disroot.org>, <maxwasmailed@proton.me>
+* Lead -> czjstmax : <jstmaxlol@disroot.org>
