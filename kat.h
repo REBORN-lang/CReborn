@@ -1,6 +1,6 @@
 // kat.cfg (kat.h)
 // with love by czjstmax <jstmaxlol@disroot.org>
-// header version 1
+// header version 2
 
 #pragma once
 
@@ -21,7 +21,7 @@ struct kat_api {
 };
 
 // Creates a file
-int katcreate(const char *path) {
+static inline int katcreate(const char *path) {
     FILE *f = fopen(path, "w");
     if (!f) return 1;
     fclose(f);
@@ -29,7 +29,7 @@ int katcreate(const char *path) {
 }
 
 // Appends a key=val to file
-int katadd(const char *key, const char *val, const char *path) {
+static inline int katadd(const char *key, const char *val, const char *path) {
     FILE *f = fopen(path, "a");
     if (f) {
         fprintf(f, "%s=%s\n", key, val);
@@ -40,7 +40,7 @@ int katadd(const char *key, const char *val, const char *path) {
 }
 
 // Appends a comment to file
-int kataddcomment(const char *str, const char *path) {
+static inline int kataddcomment(const char *str, const char *path) {
     FILE *f = fopen(path, "a");
     if (f) {
         fprintf(f, "#%s\n", str);
@@ -51,7 +51,7 @@ int kataddcomment(const char *str, const char *path) {
 }
 
 // Reads a key from file
-int katreadkey(const char *key, const char *path, char *buffer, size_t bufsize) {
+static inline int katreadkey(const char *key, const char *path, char *buffer, size_t bufsize) {
     FILE *f = fopen(path, "r");
     if (!f) return 1;
 
@@ -79,7 +79,7 @@ int katreadkey(const char *key, const char *path, char *buffer, size_t bufsize) 
 }
 
 // Deletes a key from file
-int katdelkey(const char *key, const char *path) {
+static inline int katdelkey(const char *key, const char *path) {
     FILE *f = fopen(path, "r");
     if (!f) return 1;
 
@@ -119,7 +119,7 @@ int katdelkey(const char *key, const char *path) {
 }
 
 // Edits a key's value from file
-int kateditkey(const char *key, const char *new_val, const char *path) {
+static inline int kateditkey(const char *key, const char *new_val, const char *path) {
     FILE *f = fopen(path, "r");
     if (!f) return 1;
 
