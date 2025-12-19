@@ -14,20 +14,20 @@ INSTALL_TARGET = crbc
 INSTALL_DEBUG_TARGET = $(INSTALL_TARGET)_debug
 
 # Compile all
-All:
+all:
 	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 	$(CC) $(DEBUG_CFLAGS) $(SRC) -o $(DEBUG_TARGET)
 
 # Compile release (same as 'make')
-Release:
+release:
 	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 
 # Compile debug
-Debug:
+rebug:
 	$(CC) $(DEBUG_CFLAGS) $(SRC) -o $(DEBUG_TARGET)
 
 # Clean all (release + debug)
-cleanall:
+clean cleanall:
 	rm -f $(TARGET)
 	rm -f $(DEBUG_TARGET)
 
