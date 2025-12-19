@@ -37,7 +37,6 @@ function! s:Compile(debug)
   execute '!' . l:cmd
 endfunction
 
-" user commands
 command! Compn         call s:Compile(0)
 command! Cn            call s:Compile(0)
 

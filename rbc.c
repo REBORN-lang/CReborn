@@ -51,11 +51,68 @@
 #include <string.h>
 
 // git@github.com:jstmaxlol/kat
-#include "kat.h"
+#include "headers/kat.h"
 
-int main(/*int argc, char **argv*/) {
-    printf(":> [work-in-progress]\n");
+// CReborn headers (CReborn APIs)
+#include "headers/codegen.h"
+#include "headers/abstract.h"
+#include "headers/freeast.h"
+
+// ASTs in abstract.h
+//
+
+// Functions (fwd. declars. and externs)
+//
+// headers/abstract.h
+// headers/freeast.h
+// headers/codegen.h
+//
+// local / helpers
+static inline int Eval(int x);
+
+// main
+int main(int argc, char **argv) {
+    printf(":> Checking for arguments...\n");
+    if (argc >= 2) {
+        for (int i = 1; i < argc; i++) {
+            printf("argv[%d] = %s\n", i, argv[i]);
+        }
+    } else {
+        printf(":> No arguments were found. (%d)\n\n", argc-1);
+    }
+
+    const char *ident_buff = "number";
+    const char *type_buff  = "int";
+
+    int value_buff = 2;
+
+    if (argc == 3) {
+        if (strlen(argv[1]) >= 1)
+            ident_buff = argv[1];
+        //if (strlen(argv[2]) >= 1)
+        //    type_buff = argv[2];
+        if (strlen(argv[2]) >= 1)
+            value_buff = atoi(argv[2]);
+    }
+
+    Expr *e = ExprIntLiteral(value_buff);
+    Decl *decl = DeclareVariable(ident_buff, type_buff, e);
+
+    if (decl->kind == DECL_VAR) {
+        DeclVar *v = decl->as;
+        printf("v->ident=%s, v->type=%s\nlet %s: %s = %d;", v->ident, v->type, v->ident, v->type, value_buff);
+    }
+
+    FreeExpr(e);
+    FreeDecl(decl);
+
     return 0;
+}
+
+// Functions (definitions)
+//
+static inline int Eval(int x) {
+    return x;
 }
 
 #endif
