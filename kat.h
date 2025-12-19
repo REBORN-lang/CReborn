@@ -1,6 +1,6 @@
 // kat.cfg (kat.h)
 // with love by czjstmax <jstmaxlol@disroot.org>
-// header version 1
+// header version 2
 
 #pragma once
 
