@@ -27,16 +27,16 @@
  *      You can also obviously also set this in your .vimrc.
  *    
  *    - For Vim users that want to (a)llow the local .exrc for commodity, you can just do:
- *                                  :set exrc secure
- *   and reopen any file in the repo, then you will be asked to (a)llow, meaning to trust this
- *   repo's .exrc, after (a)llowing it you will already have the 4 spaces indentation, the 100
- *   characters limit (textwidth limit) and the format options set automatically. This only applies
- *   when editing files from this repo, but if you want them in your global .vimrc or neovim config
- *   you can also copy them, again, from the local .exrc file.
+ *                                      :set exrc nosecure
+ *      and reopen any file in the repo, then you will be asked to (a)llow, meaning to trust this
+ *      repo's .exrc, after (a)llowing it you will already have the 4 spaces indentation, the 100
+ *      characters limit (textwidth limit) and the format options set automatically. This only
+ *      applies when editing files from this repo, but if you want them in your global .vimrc or
+ *      neovim config you can also copy them, again, from the local .exrc file.
  *
  * - Note: If you use vim/nvim and you loaded (allowed) the .exrc from this repo you can also use
- *   these commands that will automatically compile for either release / normal mode testing or for
- *   debugging mode.
+ *         these commands that will automatically compile for either release / normal mode testing
+ *         or for debugging mode.
  *   
  *   :Cn / :Compn - Compiles with 'Normal compile'
  *   :Cd / :Compd - Compiles with 'Debug compile'
@@ -70,17 +70,24 @@
 //
 // local / helpers
 static inline int Eval(int x);
+static inline void EmitExpr(Expr *expr, FILE *out);
+static inline void EmitDeclVar(DeclVar *v, FILE *out);
 
 // main
 int main(int argc, char **argv) {
     printf(":> Checking for arguments...\n");
+
     if (argc >= 2) {
+        // mostly debug info
         for (int i = 1; i < argc; i++) {
             printf("argv[%d] = %s\n", i, argv[i]);
         }
     } else {
         printf(":> No arguments were found. (%d)\n\n", argc-1);
     }
+
+    // TODO: remove this, added for clarity
+    printf("\n");
 
     const char *identBuff = "number";
     const char *typeBuff  = "int";
@@ -100,7 +107,7 @@ int main(int argc, char **argv) {
     Decl *decl = DeclareVariable(identBuff, typeBuff, e);
 
     if (decl->kind == DECL_VAR) {
-        DeclVar *v = decl->as;
+        DeclVar *v = decl->as.var;
         printf("v->ident=%s, v->type=%s\nlet %s: %s = %d;", v->ident, v->type, v->ident, v->type, valueBuff);
     }
 
@@ -113,9 +120,60 @@ int main(int argc, char **argv) {
 // Functions (definitions)
 //
 static inline int Eval(int x) {
-    // TODO
+    // TODO:
     // (work on this after AST is finished)
     return x;
+}
+
+void EmitExpr(Expr *expr, FILE *out) {
+    if (!expr) return;
+
+    switch (expr->kind) {
+
+    case EXPR_INT: {
+        ExprInt *lit = expr->as.intLiteral;
+        fprintf(out, "%d", lit->value);
+        break;
+    }
+
+    case EXPR_BOOL: {
+        ExprBool *b = expr->as.boolLiteral;
+        fprintf(out, "%s", b->value ? "1" : "0");
+        break;
+    }
+
+    case EXPR_CHAR: {
+        ExprChar *c = expr->as.charLiteral;
+        fprintf(out, "'%c'", c->value);
+        break;
+    }
+
+    case EXPR_STRING: {
+        ExprString *s = expr->as.stringLiteral;
+        fprintf(out, "\"%s\"", s->value);
+        break;
+    }
+
+    case EXPR_IDENT: {
+        ExprIdent *id = expr->as.ident;
+        fprintf(out, "%s", id->name);
+        break;
+    }
+
+    default:
+        break;
+    }
+}
+
+void EmitDeclVar(DeclVar *v, FILE *out) {
+    fprintf(out, "%s %s", v->type, v->ident);
+
+    if (v->init != NULL) {
+        fprintf(out, " = ");
+        EmitExpr(v->init, out);
+    }
+
+    fprintf(out, ";\n");
 }
 
 #endif

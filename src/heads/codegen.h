@@ -1,5 +1,5 @@
-#ifndef CRBC_CODEGEN
-#define CRBC_CODEGEN
+#ifndef CRBC_CODEGEN_H
+#define CRBC_CODEGEN_H
 
 // Header file for CReborn's Codegen API
 

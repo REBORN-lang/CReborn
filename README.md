@@ -2,7 +2,7 @@
 
 # CReborn
 **CReborn** or **C/REBORN** _is_ the first official implementation of the **REBORN** Programming Language \
-It is based on the **Reborn Standard** spec available at [_link_](https://reborn-lang.github.io/documents/standard)
+It is based on the **Reborn Standard** spec available at [_link_](https://reborn-lang.github.io/documents/standard) \
 
 # Contributions
 * Lead developer -> czjstmax : <jstmaxlol@disroot.org>

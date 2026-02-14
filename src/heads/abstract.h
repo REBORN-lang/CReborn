@@ -1,6 +1,7 @@
-#ifndef CRBC_ABSTR
-#define CRBC_ABSTR
+#ifndef CRBC_ABSTR_H
+#define CRBC_ABSTR_H
 
+#include <stdio.h> // FILE, fprintf()
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -12,39 +13,64 @@ enum ExprKind {
     EXPR_IDENT
 };
 
-typedef struct Expr {
-    enum ExprKind kind;
-    void *as;
-} Expr;
+// fwd.
+typedef struct Expr Expr;  
+typedef struct ExprInt ExprInt;
+typedef struct ExprChar ExprChar;
+typedef struct ExprBool ExprBool;
+typedef struct ExprString ExprString;
+typedef struct ExprIdent ExprIdent;
+typedef struct ExprBinary ExprBinary;
 
-typedef struct ExprInt {
+struct Expr {
+    enum ExprKind kind;
+    union {
+        ExprInt    *intLiteral;
+        ExprBool   *boolLiteral;
+        ExprChar   *charLiteral;
+        ExprString *stringLiteral;
+        ExprIdent  *ident;
+    } as;
+};
+
+struct ExprInt {
     int value;
-} ExprInt;
+};
 //
-typedef struct ExprChar {
+struct ExprChar {
     char value;
-} ExprChar;
+};
 //
-typedef struct ExprBool {
+struct ExprBool {
     bool value;
-} ExprBool;
+};
 //
-typedef struct ExprString {
+struct ExprString {
     char *value;
-} ExprString;
+};
 //
-typedef struct ExprIdent {
+struct ExprIdent {
     char *name;
-} ExprIdent;
+};
+//
+struct ExprBinary {
+    Expr *left;
+    Expr *right;
+    char op;
+};
 
 // ===== STATEMENTS =====
-typedef struct Stmt {
-    int _dummy;
-} Stmt;
 
-typedef struct Block {
+typedef struct Stmt Stmt;
+typedef struct Block Block;
+
+struct Stmt {
     int _dummy;
-} Block;
+};
+
+struct Block {
+    int _dummy;
+};
 
 // ===== DECLARATIONS =====
 enum DeclKind {
@@ -55,48 +81,60 @@ enum DeclKind {
     DECL_TYPE_UNION
 };
 
-typedef struct Decl {
+// fwd.
+typedef struct Decl Decl;
+typedef struct DeclVar DeclVar;
+typedef struct DeclFunc DeclFunc;
+typedef struct DeclTypeStruct DeclTypeStruct;
+typedef struct EnumMember EnumMember;
+typedef struct DeclTypeEnum DeclTypeEnum;
+typedef struct DeclTypeUnion DeclTypeUnion;
+
+struct Decl {
     enum DeclKind kind;
-    void *as;
-} Decl;
+    union {
+        DeclVar        *var;
+        DeclFunc       *func;
+        DeclTypeStruct *typeStruct;
+        DeclTypeEnum   *typeEnum;
+        DeclTypeUnion  *typeUnion;
+    } as;
+};
 
 // variable declaration
-typedef struct DeclVar {
+struct DeclVar {
     char *ident;
     char *type;      // TODO: replace with Type*
     Expr *init;      // NULL => declaration only
-} DeclVar;
+};
 
-// function declaration
-typedef struct DeclFunc {
+struct DeclFunc {
     char *ident;
     char *return_type;  // NULL => inferred
     char *params;       // TODO: param list
     Block *body;        // NULL => forward declaration
-} DeclFunc;
+};
 
-// struct type declaration
-typedef struct DeclTypeStruct {
+struct DeclTypeStruct {
     char *ident;
     char *members;   // TODO: member list
-} DeclTypeStruct;
+};
 
-// enum type declaration
-typedef struct EnumMember {
+struct EnumMember {
     char *name;
     char *value;     // NULL => implicit
-} EnumMember;
+};
 
-typedef struct DeclTypeEnum {
+struct DeclTypeEnum {
     char *ident;
     EnumMember *members;
-} DeclTypeEnum;
+};
 
 // union type declaration
-typedef struct DeclTypeUnion {
+struct DeclTypeUnion {
     char *ident;
     char *members;   // TODO: member list
-} DeclTypeUnion;
+};
 
 // ===== FUNCTIONS =====
 static inline Decl *DeclareVariable(const char *ident, const char *type, Expr *init) {
@@ -108,7 +146,7 @@ static inline Decl *DeclareVariable(const char *ident, const char *type, Expr *i
     var->init    = init;
 
     decl->kind   = DECL_VAR;
-    decl->as     = var;
+    decl->as.var = var;
 
     return decl;
 }
@@ -119,8 +157,8 @@ static inline Expr *ExprIntLiteral(int value) {
 
     lit->value   = value;
 
-    expr->kind   = EXPR_INT;
-    expr->as     = lit;
+    expr->kind          = EXPR_INT;
+    expr->as.intLiteral = lit;
 
     return expr;
 }

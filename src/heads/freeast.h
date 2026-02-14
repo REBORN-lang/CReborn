@@ -1,5 +1,5 @@
-#ifndef CRBC_FREEAST
-#define CRBC_FREEAST
+#ifndef CRBC_FREEAST_H
+#define CRBC_FREEAST_H
 
 // Free memory functions, utilize after having used the AST
 
@@ -10,19 +10,21 @@ void FreeExpr(Expr *expr)
     if (!expr) return;
 
     switch (expr->kind) {
-    case EXPR_INT:
-        free(expr->as);
-        break;
-    case EXPR_BOOL:
-        break;
-    case EXPR_CHAR:
-        break;
-    case EXPR_STRING:
-        break;
-    case EXPR_IDENT:
-        break;
-    default:
-        break;
+        case EXPR_INT:
+            free(expr->as.intLiteral);
+            break;
+        case EXPR_BOOL:
+            free(expr->as.boolLiteral);
+            break;
+        case EXPR_CHAR:
+            free(expr->as.charLiteral);
+            break;
+        case EXPR_STRING:
+            free(expr->as.stringLiteral);
+            break;
+        case EXPR_IDENT:
+            free(expr->as.ident);
+            break;
     }
 
     free(expr);
@@ -44,7 +46,7 @@ void FreeDecl(Decl *decl)
 
     switch (decl->kind) {
     case DECL_VAR:
-        FreeDeclVar((DeclVar *)decl->as);
+        FreeDeclVar(decl->as.var);
         break;
 
     case DECL_FUNC:

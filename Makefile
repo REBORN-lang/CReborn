@@ -18,7 +18,7 @@ all:
 	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 	$(CC) $(DEBUG_CFLAGS) $(SRC) -o $(DEBUG_TARGET)
 
-# Compile release (same as 'make')
+# Compile release (default when 'make')
 release:
 	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 
@@ -56,3 +56,4 @@ InstallDebug:
 Uninstall:
 	rm -f $(BINDIR)/$(INSTALL_TARGET)
 	rm -f $(BINDIR)/$(INSTALL_DEBUG_TARGET)
+
