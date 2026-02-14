@@ -86,21 +86,19 @@ int main(int argc, char **argv) {
         printf(":> No arguments were found. (%d)\n\n", argc-1);
     }
 
-    // TODO: remove this, added for clarity
-    printf("\n");
-
-    const char *identBuff = "number";
+    const char *identBuff = "var";
     const char *typeBuff  = "int";
-
-    int valueBuff = 2;
+    int valueBuff = 42;
 
     if (argc == 3) {
         if (strlen(argv[1]) >= 1)
             identBuff = argv[1];
-        //if (strlen(argv[2]) >= 1)
-        //    typeBuff = argv[2];
+
         if (strlen(argv[2]) >= 1)
-            valueBuff = atoi(argv[2]);
+            typeBuff = argv[2];
+
+        if (strlen(argv[3]) >= 1)
+            valueBuff = atoi(argv[3]);
     }
 
     Expr *e = ExprIntLiteral(valueBuff);
@@ -108,7 +106,7 @@ int main(int argc, char **argv) {
 
     if (decl->kind == DECL_VAR) {
         DeclVar *v = decl->as.var;
-        printf("v->ident=%s, v->type=%s\nlet %s: %s = %d;", v->ident, v->type, v->ident, v->type, valueBuff);
+        printf("v->ident=%s, v->type=%s\nlet %s: %s = %d;\n", v->ident, v->type, v->ident, v->type, valueBuff);
     }
 
     FreeExpr(e);
