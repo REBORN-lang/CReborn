@@ -2,16 +2,26 @@
 
 ## CReborn
 
-**CReborn** or **C/REBORN** _is_**\*** the first official implementation of the **REBORN** Programming Language \
+**CReborn** or **C/REBORN** _is_**\*** the first official implementation of the **REBORN** Programming Language
+
 It is based on the **Reborn Standard** spec available at [_(link)_](https://reborn.ct.ws/std)
 
 > *Note: CReborn is still **not** fully working. Development is still ongoing.
 
+---
+
 ### Contributions
+
 * Lead developer: czjstmax - <jstmaxlol@disroot.org>
 
+---
+
 ### API
+
 > TODO. Will not be worked on for now because development is still early and things change A LOT and QUICKLY.
 
+---
+
 ### Maintainers
+
 For more info about the maintainers of CReborn you can check `MAINTAINERS` file.
